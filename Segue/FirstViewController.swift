@@ -8,8 +8,8 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
-
+final class FirstViewController: UIViewController {
+    
     let navBarTitle = "Simple app"
     let launchTimeTitleLabel: UILabel = {
         let label = UILabel()
@@ -59,19 +59,21 @@ class FirstViewController: UIViewController {
         
         view.backgroundColor = .white
         title = navBarTitle
-        
-        addSubwiews()
         navigationItem.rightBarButtonItems = [updateButton]
+        addSubwiews()
+        showLaunchTime()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         setFrames()
-        // TODO: удалить:
-//        print(view.frame)
-//        print(pushButton.frame)
-//        print(view.safeAreaInsets.bottom)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        showAppearanceTime()
     }
     
     private func addSubwiews() {
@@ -81,7 +83,7 @@ class FirstViewController: UIViewController {
         view.addSubview(appearanceTimeLabel)
         view.addSubview(pushButton)
     }
-
+    
     private func setFrames() {
         launchTimeTitleLabel.sizeToFit()
         launchTimeTitleLabel.frame = CGRect(
@@ -129,14 +131,30 @@ class FirstViewController: UIViewController {
         pushButton.sizeToFit()
     }
     
+    private func showLaunchTime() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy 'at' HH:mm:ss aaa"
+        launchTimeLabel.text = formatter.string(from: Date())
+            .description
+        launchTimeLabel.sizeToFit()
+    }
+    
+    private func showAppearanceTime() {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy 'at' HH:mm:ss aaa"
+        appearanceTimeLabel.text = formatter.string(from: Date())
+            .description
+        appearanceTimeLabel.sizeToFit()
+    }
+    
     // MARK: - Actions
     
     @objc private func updateButtonTapped() {
-        print("Update tapped")
+        showAppearanceTime()
     }
     
     @objc private func pushButtonTapped() {
-        print("Push tapped")
+        navigationController?.pushViewController(SecondViewController(), animated: true)
     }
     
 }
