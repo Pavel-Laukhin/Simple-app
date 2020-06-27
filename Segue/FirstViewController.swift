@@ -52,6 +52,11 @@ final class FirstViewController: UIViewController {
         button.title = "Update"
         return button
     }()
+    private lazy var formatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, yyyy 'at' HH:mm:ss aaa"
+        return formatter
+    }()
     
     // MARK: - Life cycle
     override func viewDidLoad() {
@@ -132,18 +137,12 @@ final class FirstViewController: UIViewController {
     }
     
     private func showLaunchTime() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, yyyy 'at' HH:mm:ss aaa"
         launchTimeLabel.text = formatter.string(from: Date())
-            .description
         launchTimeLabel.sizeToFit()
     }
     
     private func showAppearanceTime() {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MMM d, yyyy 'at' HH:mm:ss aaa"
         appearanceTimeLabel.text = formatter.string(from: Date())
-            .description
         appearanceTimeLabel.sizeToFit()
     }
     
